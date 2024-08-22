@@ -25,3 +25,11 @@ async function buscaEndereco(cep) {
 
 var cep = document.getElementById('cep');
 cep.addEventListener("focusout", () => buscaEndereco(cep.value))
+
+/*
+document.getElementById('enviar').addEventListener('click', function () {
+    // Verifique se a validação do formulário foi bem-sucedida aqui
+    // Se sim, redirecione para a página desejada
+    window.location.href = 'pagina-destino.html';
+});
+*/

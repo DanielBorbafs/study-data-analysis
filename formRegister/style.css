@@ -112,6 +112,13 @@ body {
     flex-wrap: wrap;
 }
 
+.invalid {
+    color: red;
+}
+
+.valid {
+    color: green;
+}
 
 @media(width < 480px) {
     .content-input-btn {
