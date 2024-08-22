@@ -112,6 +112,7 @@ body {
     flex-wrap: wrap;
 }
 
+
 @media(width < 480px) {
     .content-input-btn {
         display: flex;
