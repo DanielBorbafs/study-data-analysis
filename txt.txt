@@ -1,0 +1,5 @@
+-- login mongo
+DanBorba
+pass: aFUwnX0MiBwcXMRq
+
+mongodb+srv://DanBorba:<db_password>@users.qs0ns.mongodb.net/?retryWrites=true&w=majority&appName=Users
