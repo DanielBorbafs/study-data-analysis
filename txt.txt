@@ -2,4 +2,3 @@
 DanBorba
 pass: DanBorba123
 
-mongodb+srv://DanBorba:FUwnX0MiBwcXMRq@users.qs0ns.mongodb.net/Users?retryWrites=true&w=majority&appName=Users
