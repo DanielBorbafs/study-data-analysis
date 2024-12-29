@@ -1,4 +1,0 @@
--- login mongo
-DanBorba
-pass: DanBorba123
-
