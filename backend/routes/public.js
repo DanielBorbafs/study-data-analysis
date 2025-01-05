@@ -1,7 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -9,51 +8,64 @@ const router = express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// rota de cadastro
 router.post('/cadastro', async (req, res) => {
   try {
-    const user = req.body;
+    const { name, email, password } = req.body;
 
+    // Verificando se o usuário já existe
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Usuário já cadastrado' });
+    }
+
+    // Criptografando a senha
     const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(user.password, salt);
+    const hashPassword = await bcrypt.hash(password, salt);
 
+    // Criando usuário no banco
     const userDB = await prisma.user.create({
       data: {
-        email: user.email,
-        name: user.name,
+        name,
+        email,
         password: hashPassword,
       },
     });
-    res.status(201).json(userDB);
+
+    res
+      .status(201)
+      .json({ message: 'Usuário criado com sucesso', user: userDB });
   } catch (err) {
-    res.status(500).json({ message: 'Erro no servidor tente novamente' });
+    console.error(err);
+    res.status(500).json({ message: 'Erro no servidor, tente novamente' });
   }
 });
 
-// rota de login
-
 router.post('/login', async (req, res) => {
   try {
-    const userInfo = req.body;
+    const { email, password } = req.body;
+
     const user = await prisma.user.findUnique({
-      where: { email: userInfo.email },
+      where: { email },
     });
     if (!user) {
       return res.status(404).json({ message: 'Usuário não encontrado' });
     }
 
-    const isMatch = await bcrypt.compare(userInfo.password, user.password);
-
+    // Comparando a senha informada com a armazenada
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: 'Senha inválida' });
     }
 
-    // gerando o token jwt
+    // Gerando o token JWT
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1d' });
 
-    res.status(200).json(token);
+    res.status(200).json({ message: 'Login bem-sucedido', token });
   } catch (err) {
-    res.status(500).json({ message: 'Erro no servidor tente novamente' });
+    console.error(err);
+    res.status(500).json({ message: 'Erro no servidor, tente novamente' });
   }
 });
 

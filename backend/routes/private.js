@@ -6,17 +6,17 @@ const prisma = new PrismaClient();
 
 router.get('/listar-usuarios', async (req, res) => {
   try {
-    // Trazendo todos os usuários, porém omitindo o password deles.
     const users = await prisma.user.findMany({
       select: {
-        id: true, // Inclua os campos que você deseja retornar
+        id: true,
         name: true,
         email: true,
       },
     });
+
     res.status(200).json({ message: 'Usuários listados com sucesso', users });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ message: 'Falha no servidor' });
   }
 });
