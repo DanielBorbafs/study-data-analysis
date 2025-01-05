@@ -27,6 +27,11 @@ function Home() {
     getUsers();
   }
 
+  async function deleteUsers(id) {
+    await api.delete(`/usuarios/${id}`);
+    getUsers();
+  }
+
   useEffect(() => {
     getUsers(); // Chama a função para carregar os usuários
   }, []);
@@ -57,7 +62,7 @@ function Home() {
               Email:<span>{user.email}</span>
             </p>
           </div>
-          <button>
+          <button onClick={() => deleteUsers(user.id)}>
             <img src={Delete} />
           </button>
         </div>

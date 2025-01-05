@@ -69,4 +69,13 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.delete('/usuarios/:id', async (req, res) => {
+  await prisma.user.delete({
+    where: {
+      id: req.params.id,
+    },
+  });
+
+  res.status(200).json({ message: 'Usuario deletado com sucesso' });
+});
 export default router;
