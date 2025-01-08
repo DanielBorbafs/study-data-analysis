@@ -80,9 +80,6 @@
 
 ---
 
-
-<hr>
-
 <p>
   Este repositório será atualizado ao longo do tempo para uma aplicação maior, por isso o nodemon ainda está ativo pois ainda está em fase de desenvolvimento.
 </p>
